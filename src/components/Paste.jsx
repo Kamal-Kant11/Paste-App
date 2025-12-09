@@ -106,4 +106,4 @@ const Paste = () => {
   );
 };
 
-export default Paste;
+export default Paste; 
