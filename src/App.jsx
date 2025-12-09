@@ -38,7 +38,7 @@ const App = () => {
 
 
   return (
-    <div className='bg-gray-600 h-screen pt-5 text-white flex justify-center position-'>
+    <div className='bg-gray-600 h-screen pt-5 text-white flex justify-center'>
       <RouterProvider router={router} />
     </div>
   )
