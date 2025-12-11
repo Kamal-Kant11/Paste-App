@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { addToPastes, updateToPastes } from "../redux/pasteSlice";
 import toast from "react-hot-toast";
+import PasteForm from "../components/paste/pasteForm";
 
 const Home = () => {
   const [title, setTitle] = useState("");
-  const [value, setValue] = useState("");
+  const [content, setContent] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
   const pasteId = searchParams.get("pasteId");
   const dispatch = useDispatch();
@@ -17,27 +18,27 @@ const Home = () => {
       const existingPaste = allPastes.find((item) => item._id === pasteId);
       if (existingPaste) {
         setTitle(existingPaste.title);
-        setValue(existingPaste.content);
+        setContent(existingPaste.content);
       } else {
         // Paste not found, clear inputs and optionally notify user
         setTitle("");
-        setValue("");
+        setContent("");
         toast.error("Paste not found");
         setSearchParams({}); // clear pasteId from URL
       }
     }
   }, [pasteId, allPastes]);
 
-  function createPaste() {
+  function createOrUpdatePaste() {
     // Validate inputs
-    if (!title.trim() || !value.trim()) {
+    if (!title.trim() || !content.trim()) {
       toast.error("Title and Content cannot be empty");
       return; // Stop execution if validation fails
     }
 
     const paste = {
       title: title,
-      content: value,
+      content: content,
       _id: pasteId || Date.now().toString(36),
       createdAt: new Date().toDateString(),
     };
@@ -52,42 +53,19 @@ const Home = () => {
 
     // Clear inputs and URL params after create/update
     setTitle("");
-    setValue("");
+    setContent("");
     setSearchParams({});
   }
 
   return (
-    <div>
-      <div className="mt-5 flex justify-center gap-7">
-        <input
-          className="pl-3 bg-gray-700 rounded-2xl w-[65%]"
-          type="text"
-          placeholder="Enter The Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <button
-          onClick={createPaste}
-          disabled={!title.trim() || !value.trim()}
-          className={`p-2 bg-gray-800 px-3 rounded-2xl border-white ${
-            !title.trim() || !value.trim()
-              ? "opacity-50 cursor-not-allowed"
-              : ""
-          }`}
-        >
-          {pasteId ? "Update My Paste" : "Create My Paste"}
-        </button>
-      </div>
-      <div>
-        <textarea
-          className="p-3 bg-gray-700 rounded-2xl mt-5 min-w-[500px]"
-          value={value}
-          placeholder="Enter The Content"
-          onChange={(e) => setValue(e.target.value)}
-          rows={20}
-        />
-      </div>
-    </div>
+     <PasteForm
+      title={title}
+      setTitle={setTitle}
+      content={content}
+      setContent={setContent}
+      onSubmit={createOrUpdatePaste}
+      isUpdating={!!pasteId}
+    />
   );
 };
 
