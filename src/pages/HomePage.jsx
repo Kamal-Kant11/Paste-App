@@ -64,7 +64,7 @@ const Home = () => {
       content={content}
       setContent={setContent}
       onSubmit={createOrUpdatePaste}
-      isUpdating={!!pasteId}
+      isUpdating={pasteId}
     />
   );
 };
