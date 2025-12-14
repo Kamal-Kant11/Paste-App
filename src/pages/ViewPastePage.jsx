@@ -10,9 +10,7 @@ const ViewPastePage = () => {
 
   if (!paste) {
     return (
-      <div className="mt-5 text-center text-red-500">
-        Paste not found.
-      </div>
+      <div className="mt-5 text-center text-red-500">Paste not found.</div>
     );
   }
 
@@ -20,6 +18,7 @@ const ViewPastePage = () => {
     <ViewPasteCard
       title={paste.title}
       content={paste.content}
+      createdAt={paste.createdAt}
     />
   );
 };

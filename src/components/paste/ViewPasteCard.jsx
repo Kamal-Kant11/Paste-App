@@ -2,25 +2,33 @@ import React from "react";
 import Input from "../ui/Input";
 import TextArea from "../ui/TextArea";
 
-const ViewPasteCard = ({ title, content }) => {
+const ViewPasteCard = ({ title, content, createdAt }) => {
   return (
-    <div>
-      <div className="mt-5 flex justify-center">
-        <Input
-          type="text"
-          value={title}
-          readOnly
-          className="min-w-[500px]"
-        />
-      </div>
+    <div className="mt-6 flex justify-center px-4">
+      <div className="w-full max-w-4xl">
+        {/* Title */}
+        <div className="mb-4">
+          <Input
+            type="text"
+            value={title}
+            readOnly
+            className="w-full text-lg font-semibold cursor-default"
+          />
+        </div>
 
-      <div>
-        <TextArea
-          value={content}
-          readOnly
-          rows={20}
-          className="mt-5 min-w-[500px]"
-        />
+        <div className="relative">
+          {/* Content */}
+          <TextArea
+            value={content}
+            readOnly
+            rows={20}
+            className="w-full resize-none cursor-default"
+          />
+
+          <span className="absolute bottom-4 right-4 text-sm text-gray-600 pointer-events-none">
+            Created on {createdAt}
+          </span>
+        </div>
       </div>
     </div>
   );

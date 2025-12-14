@@ -58,7 +58,7 @@ const Home = () => {
   }
 
   return (
-     <PasteForm
+    <PasteForm
       title={title}
       setTitle={setTitle}
       content={content}

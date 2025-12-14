@@ -12,31 +12,32 @@ const PasteForm = ({
   isEdit,
 }) => {
   return (
-    <div>
-      <div className="mt-5 flex justify-center gap-7">
+    <div className="max-w-4xl mx-auto px- sm:px-6 md:px-8 mt-6">
+      <div className="flex items-center px-1 gap-7 sm:gap-4">
         <Input
           type="text"
           placeholder="Enter The Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-[65%]"
+          className="flex-1 h-11"
         />
 
         <Button
           onClick={onSubmit}
           disabled={!title.trim() || !content.trim()}
+          className="h-11 px-4 sm:px-6 whitespace-nowrap"
         >
-          {isEdit ? "Update My Paste" : "Create My Paste"}
+          {isEdit ? "Update" : "Create"}
         </Button>
       </div>
 
-      <div>
+      <div className="mt-7">
         <TextArea
           placeholder="Enter The Content"
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          rows={20}
-          className="mt-5 min-w-[500px]"
+          rows={14}
+          className="w-full min-h-[450px] md:min-h-[450px]"
         />
       </div>
     </div>

@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 
 import PasteSearch from "../components/paste/PasteSearch";
 import Button from "../components/ui/Buttton";
-import PasteList from "../components/paste/PasteList";
+import PasteCard from "../components/paste/PasteCard";
 
 const PastesPage = () => {
   const pastes = useSelector((state) => state.paste.pastes);
@@ -17,10 +17,9 @@ const PastesPage = () => {
     paste.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Delete handler passed down to PasteActions via PasteCard and PasteList
+  // Delete handler
   const handleDelete = (pasteId) => {
     dispatch(removeFromPastes(pasteId));
-    toast.success("Paste Deleted");
   };
 
   // Clear all pastes handler
@@ -32,17 +31,20 @@ const PastesPage = () => {
   };
 
   return (
-    <div>
-      <div className="mt-5 flex justify-center gap-7">
+    <div className="max-w-8xl mx-auto px-4 sm:px-6">
+      <div className="mt-5 flex justify-center gap-7 flex-wrap">
         {/* Search Bar */}
         <PasteSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
         {/* Clear All Pastes Button */}
-        <Button onClick={handleClearAll}>Clear All Pastes</Button>
+        <Button onClick={handleClearAll}>Clear All</Button>
       </div>
 
-      {/* List of Pastes */}
-      <PasteList pastes={filteredPastes} onDelete={handleDelete} />
+      <div className="grid gap-6 mt-8">
+        {filteredPastes.map((paste) => (
+          <PasteCard key={paste._id} paste={paste} onDelete={handleDelete} />
+        ))}
+      </div>
     </div>
   );
 };

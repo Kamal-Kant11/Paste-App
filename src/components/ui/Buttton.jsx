@@ -3,17 +3,20 @@ import React from "react";
 function Button(props) {
   const { children, onClick, disabled, className } = props;
 
-  // Basic styling classes
-  const baseClasses = "p-2 rounded-2xl border border-white bg-gray-800 text-white cursor-pointer";
+  const baseClasses =
+    "rounded-2xl bg-blue-400 text-white font-semibold cursor-pointer select-none transition-colors  duration-200";
 
-  // If disabled, apply some styles
-  const disabledClasses = disabled ? "opacity-50 cursor-not-allowed" : "";
+  const enabledClasses = "hover:bg-blue-500 border active:bg-blue-600";
+
+  const disabledClasses = "opacity-50 cursor-not-allowed bg-blue-300";
 
   return (
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`${baseClasses} ${disabledClasses} ${className ? className : ""}`}
+      className={`${baseClasses} ${
+        disabled ? disabledClasses : enabledClasses
+      } px-4 py-2 ${className || ""}`}
     >
       {children}
     </button>

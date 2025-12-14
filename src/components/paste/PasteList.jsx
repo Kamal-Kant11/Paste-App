@@ -1,15 +1,14 @@
 import React from "react";
-import PasteCard from "./pasteCard";
-// import PasteCard from "./PasteCard";
-
+import PasteCard from "./PasteCard";
 
 const PasteList = ({ pastes, onDelete }) => {
-  if (pastes.length === 0) {
-    return <div className="text-center text-gray-400 mt-5">No pastes found.</div>;
-  }
+  if (pastes.length === 0)
+    return (
+      <div className="text-center mt-8 text-gray-400">No pastes found.</div>
+    );
 
   return (
-    <div className="flex flex-col gap-5 mt-5 w-full max-w-5xl mx-auto">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
       {pastes.map((paste) => (
         <PasteCard key={paste._id} paste={paste} onDelete={onDelete} />
       ))}
