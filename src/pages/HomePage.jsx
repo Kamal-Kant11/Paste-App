@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { addToPastes, updateToPastes } from "../redux/pasteSlice";
 import toast from "react-hot-toast";
-import PasteForm from "../components/paste/PasteForm";
+import PasteForm from "../components/paste/pasteForm";
 
 const Home = () => {
   const [title, setTitle] = useState("");
