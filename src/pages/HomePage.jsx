@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { addToPastes, updateToPastes } from "../redux/pasteSlice";
 import toast from "react-hot-toast";
-import PasteForm from "../components/paste/pasteForm";
+import PasteForm from "../components/paste/PasteForm";
 
 const Home = () => {
   const [title, setTitle] = useState("");
@@ -64,7 +64,7 @@ const Home = () => {
       content={content}
       setContent={setContent}
       onSubmit={createOrUpdatePaste}
-      isUpdating={pasteId}
+      isEdit={pasteId}
     />
   );
 };
