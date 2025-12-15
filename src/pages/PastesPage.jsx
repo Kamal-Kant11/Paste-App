@@ -40,10 +40,25 @@ const PastesPage = () => {
         <Button onClick={handleClearAll}>Clear All</Button>
       </div>
 
-      <div className="grid gap-6 mt-8">
-        {filteredPastes.map((paste) => (
-          <PasteCard key={paste._id} paste={paste} onDelete={handleDelete} />
-        ))}
+<div className="grid gap-6 mt-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
+        {filteredPastes.length === 0 ? (
+          <div className="rounded-2xl border-2 border-dotted border-white bg-white/9 backdrop-blur mt-3 p-10 text-center max-w-2xl mx-auto">
+            <h2 className="text-2xl text-gray-300 font-bold tracking-wide">
+              Your paste space is empty
+            </h2>
+            <p className="text-gray-300 text-sm mt-2">
+              Create a paste to start saving, editing, and sharing your notes
+              effortlessly.
+            </p>
+            <div className="text-sm font-semibold text-gray-400 italic select-none mt-2">
+              No pastes available
+            </div>
+          </div>
+        ) : (
+          filteredPastes.map((paste) => (
+            <PasteCard key={paste._id} paste={paste} onDelete={handleDelete} />
+          ))
+        )}
       </div>
     </div>
   );

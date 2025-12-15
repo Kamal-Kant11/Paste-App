@@ -3,8 +3,6 @@
 A simple and elegant **pastebin-style** app built with React, Redux Toolkit, and Tailwind CSS.
 Easily create, view, edit, delete, copy, and share text pastes with titles — all managed locally with persistence via `localStorage`.
 
----
-
 ## Features
 
 * Create pastes with a **title** and **content**
@@ -18,7 +16,6 @@ Easily create, view, edit, delete, copy, and share text pastes with titles — a
 * Client-side routing via React Router
 * State management with Redux Toolkit and `localStorage` persistence
 
----
 
 ## Tech Stack
 
@@ -28,7 +25,6 @@ Easily create, view, edit, delete, copy, and share text pastes with titles — a
 * Tailwind CSS
 * React Hot Toast
 
----
 
 ## How It Works
 
@@ -45,7 +41,7 @@ The core Redux slice `pasteSlice.js` handles:
 
 Notifications for these actions are shown using React Hot Toast.
 
-```js
+```
 // Example: Adding a paste structure
 dispatch(addToPastes({
   _id: "unique-id",
@@ -54,8 +50,6 @@ dispatch(addToPastes({
   createdAt: "Date string",
 }));
 ```
-
----
 
 ## Folder Structure
 
@@ -91,8 +85,6 @@ src/
 
 ```
 
----
-
 ## Getting Started
 
 ### Prerequisites
@@ -110,7 +102,6 @@ npm run dev
 
 Open [http://localhost:5173]
 
----
 
 ## Usage
 
@@ -119,7 +110,5 @@ Open [http://localhost:5173]
 * Click on a paste title or "View" to see the full content on a dedicated page.
 * Copy or share pastes directly from the UI with dedicated buttons.
 
----
 
 ## Demo
----

@@ -53,55 +53,56 @@ const PasteActions = ({ paste, onDelete }) => {
     "block w-full text-left px-4 py-2 rounded cursor-pointer font-semibold transition-colors duration-200 text-white";
 
   return (
-    <div className="flex items-center gap-4 flex-wrap justify-center min-w-[320px]">
-      <Link to={`/?pasteId=${paste._id}`}>
-        <Button className="text-base px-4 py-2 flex items-center gap-2">
-          <FaEdit /> Edit
-        </Button>
-      </Link>
+  <div className="flex flex-wrap justify-center items-center gap-3 min-w-[320px]">
+    <Link to={`/?pasteId=${paste._id}`} className="w-full xs:w-auto">
+      <Button className="w-full xs:w-auto text-base px-4 py-2 flex items-center gap-2 justify-center">
+        <FaEdit /> Edit
+      </Button>
+    </Link>
 
-      <Link to={`/pastes/${paste._id}`}>
-        <Button className="text-base px-4 py-2 flex items-center gap-2">
-          <FaEye /> View
-        </Button>
-      </Link>
+    <Link to={`/pastes/${paste._id}`} className="w-full xs:w-auto">
+      <Button className="w-full xs:w-auto text-base px-4 py-2 flex items-center gap-2 justify-center">
+        <FaEye /> View
+      </Button>
+    </Link>
 
+    <Button
+      onClick={copyToClipboard}
+      className="w-full xs:w-auto text-base px-4 py-2 flex items-center gap-2 justify-center"
+    >
+      <FaCopy /> Copy
+    </Button>
+
+    <div className="relative w-full xs:w-auto" ref={dropdownRef}>
       <Button
-        onClick={copyToClipboard}
-        className="text-base px-4 py-2 flex items-center gap-2"
+        onClick={toggleDropdown}
+        className="w-full xs:w-auto text-base px-4 py-2 flex items-center gap-2 justify-center"
+        aria-haspopup="true"
+        aria-expanded={isOpen}
       >
-        <FaCopy /> Copy
+        More Actions ▼
       </Button>
 
-      <div className="relative" ref={dropdownRef}>
-        <Button
-          onClick={toggleDropdown}
-          className="text-base px-4 py-2 flex items-center gap-2"
-          aria-haspopup="true"
-          aria-expanded={isOpen}
-        >
-          More Actions ▼
-        </Button>
-
-        {isOpen && (
-          <div className="absolute right-0 mt-2 w-44 bg-gray-700 rounded-md shadow-lg z-50">
-            <button
-              onClick={handleDeleteClick}
-              className={`${dropdownBtnBase} hover:bg-red-600 flex items-center gap-2`}
-            >
-              <FaTrash /> Delete
-            </button>
-            <button
-              onClick={sharePaste}
-              className={`${dropdownBtnBase} hover:bg-green-600 flex items-center gap-2`}
-            >
-              <FaShareAlt /> Share
-            </button>
-          </div>
-        )}
-      </div>
+      {isOpen && (
+        <div className="absolute right-0 mt-2 w-44 bg-gray-700 rounded-md shadow-lg z-50">
+          <button
+            onClick={handleDeleteClick}
+            className={`${dropdownBtnBase} hover:bg-red-600 flex items-center gap-2`}
+          >
+            <FaTrash /> Delete
+          </button>
+          <button
+            onClick={sharePaste}
+            className={`${dropdownBtnBase} hover:bg-green-600 flex items-center gap-2`}
+          >
+            <FaShareAlt /> Share
+          </button>
+        </div>
+      )}
     </div>
-  );
+  </div>
+);
+
 };
 
 export default PasteActions;
