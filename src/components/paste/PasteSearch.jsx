@@ -8,7 +8,7 @@ const PasteSearch = ({ searchTerm, setSearchTerm }) => {
       placeholder="Search here..."
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value)}
-      className="w-[65%]"
+      className="w-full"
     />
   );
 };

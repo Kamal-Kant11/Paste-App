@@ -12,17 +12,14 @@ const PastesPage = () => {
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Filter pastes by search term
   const filteredPastes = pastes.filter((paste) =>
     paste.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Delete handler
   const handleDelete = (pasteId) => {
     dispatch(removeFromPastes(pasteId));
   };
 
-  // Clear all pastes handler
   const handleClearAll = () => {
     if (window.confirm("Are you sure you want to delete ALL pastes?")) {
       dispatch(resetAllPastes());
@@ -31,16 +28,25 @@ const PastesPage = () => {
   };
 
   return (
-    <div className="max-w-8xl mx-auto px-4 sm:px-6">
-      <div className="mt-5 flex justify-center gap-7 flex-wrap">
+    <div className="max-w-4xl mx-auto px-2 sm:px-6 md:px-8 mt-6">
+      {/* Search + Clear All */}
+      <div className="flex flex-row xs:flex-col items-center px-1">
         {/* Search Bar */}
-        <PasteSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <div className="w-full xs:w-auto sm:flex-1">
+          <PasteSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        </div>
 
-        {/* Clear All Pastes Button */}
-        <Button onClick={handleClearAll}>Clear All</Button>
+        {/* Clear All Button */}
+        <Button
+          onClick={handleClearAll}
+          className="w-auto xs:w-full h-11 px-4 sm:px-6 ml-3 whitespace-nowrap mt-0 xs:mt-3"
+        >
+          Clear All
+        </Button>
       </div>
 
-<div className="grid gap-6 mt-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
+      {/* Paste Cards */}
+      <div className="grid gap-6 mt-8">
         {filteredPastes.length === 0 ? (
           <div className="rounded-2xl border-2 border-dotted border-white bg-white/9 backdrop-blur mt-3 p-10 text-center max-w-2xl mx-auto">
             <h2 className="text-2xl text-gray-300 font-bold tracking-wide">

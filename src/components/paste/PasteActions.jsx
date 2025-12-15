@@ -3,13 +3,33 @@ import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import Button from "../ui/Buttton";
 
-import { FaEdit, FaEye, FaCopy, FaTrash, FaShareAlt } from "react-icons/fa";
+import {
+  FaEdit,
+  FaEye,
+  FaCopy,
+  FaTrash,
+  FaShareAlt,
+  FaEllipsisV,
+} from "react-icons/fa";
+
+const useWindowWidth = () => {
+  const [width, setWidth] = React.useState(window.innerWidth);
+
+  React.useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return width;
+};
 
 const PasteActions = ({ paste, onDelete }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef();
 
-  const toggleDropdown = () => setIsOpen((prev) => !prev);
+  const width = useWindowWidth();
+  const isSmallScreen = width < 600;
 
   const closeDropdown = (e) => {
     if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -49,60 +69,103 @@ const PasteActions = ({ paste, onDelete }) => {
     }
   };
 
-  const dropdownBtnBase =
-    "block w-full text-left px-4 py-2 rounded cursor-pointer font-semibold transition-colors duration-200 text-white";
+  // Common button style
+  const btnBaseClasses =
+    "text-base flex items-center gap-2  px-4 py-2 transition-colors duration-200";
+
+  // On small screen, buttons only icon + centered, no text
+  const getBtnClasses = () =>
+    isSmallScreen
+      ? "w-13 h-13 bg-gray-600 hover:bg-blue-400 justify-center px-0 py-3" // bigger width, height and vertical padding
+      : "px-4 py-2 justify-start";
 
   return (
-  <div className="flex flex-wrap justify-center items-center gap-3 min-w-[320px]">
-    <Link to={`/?pasteId=${paste._id}`} className="w-full xs:w-auto">
-      <Button className="w-full xs:w-auto text-base px-4 py-2 flex items-center gap-2 justify-center">
-        <FaEdit /> Edit
-      </Button>
-    </Link>
-
-    <Link to={`/pastes/${paste._id}`} className="w-full xs:w-auto">
-      <Button className="w-full xs:w-auto text-base px-4 py-2 flex items-center gap-2 justify-center">
-        <FaEye /> View
-      </Button>
-    </Link>
-
-    <Button
-      onClick={copyToClipboard}
-      className="w-full xs:w-auto text-base px-4 py-2 flex items-center gap-2 justify-center"
+    <div
+      className="
+      flex gap-4 justify-center flex-wrap max-w-full
+      xs:grid xs:grid-cols-2 xs:gap-3
+    "
     >
-      <FaCopy /> Copy
-    </Button>
+      {/* Edit */}
+      <Link to={`/?pasteId=${paste._id}`}>
+        <Button title="Edit" className={`${btnBaseClasses} ${getBtnClasses()}`}>
+          <FaEdit />
+          {!isSmallScreen && "Edit"}
+        </Button>
+      </Link>
 
-    <div className="relative w-full xs:w-auto" ref={dropdownRef}>
+      {/* View */}
+      <Link to={`/pastes/${paste._id}`}>
+        <Button title="View" className={`${btnBaseClasses} ${getBtnClasses()}`}>
+          <FaEye />
+          {!isSmallScreen && "View"}
+        </Button>
+      </Link>
+
+      {/* Copy */}
       <Button
-        onClick={toggleDropdown}
-        className="w-full xs:w-auto text-base px-4 py-2 flex items-center gap-2 justify-center"
-        aria-haspopup="true"
-        aria-expanded={isOpen}
+        onClick={copyToClipboard}
+        title="Copy"
+        className={`${btnBaseClasses} ${getBtnClasses()}`}
       >
-        More Actions ▼
+        <FaCopy />
+        {!isSmallScreen && "Copy"}
       </Button>
 
-      {isOpen && (
-        <div className="absolute right-0 mt-2 w-44 bg-gray-700 rounded-md shadow-lg z-50">
-          <button
+      {/* 🔽 SMALL SCREEN: Delete & Share directly */}
+      {isSmallScreen && (
+        <>
+          <Button
             onClick={handleDeleteClick}
-            className={`${dropdownBtnBase} hover:bg-red-600 flex items-center gap-2`}
+            title="Delete"
+            className={`${btnBaseClasses} ${getBtnClasses()} bg-red-500 hover:bg-red-600`}
           >
-            <FaTrash /> Delete
-          </button>
-          <button
+            <FaTrash />
+          </Button>
+
+          <Button
             onClick={sharePaste}
-            className={`${dropdownBtnBase} hover:bg-green-600 flex items-center gap-2`}
+            title="Share"
+            className={`${btnBaseClasses} ${getBtnClasses()} bg-green-500 hover:bg-green-600`}
           >
-            <FaShareAlt /> Share
-          </button>
+            <FaShareAlt />
+          </Button>
+        </>
+      )}
+
+      {/* 🔼 BIG SCREEN: More dropdown */}
+      {!isSmallScreen && (
+        <div className="relative" ref={dropdownRef}>
+          <Button
+            onClick={() => setIsOpen((prev) => !prev)}
+            title="More actions"
+            aria-haspopup="true"
+            aria-expanded={isOpen}
+            className={`${btnBaseClasses} ${getBtnClasses()}`}
+          >
+            <FaEllipsisV /> More ▼
+          </Button>
+
+          {isOpen && (
+            <div className="absolute right-0 mt-2 w-44 bg-gray-700 rounded-md shadow-lg z-50">
+              <button
+                onClick={handleDeleteClick}
+                className="w-full px-4 py-2 text-left flex items-center gap-2 text-white hover:bg-red-600"
+              >
+                <FaTrash /> Delete
+              </button>
+              <button
+                onClick={sharePaste}
+                className="w-full px-4 py-2 text-left flex items-center gap-2 text-white hover:bg-green-600"
+              >
+                <FaShareAlt /> Share
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>
-  </div>
-);
-
+  );
 };
 
 export default PasteActions;
